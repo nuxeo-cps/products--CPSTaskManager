@@ -1,0 +1,139 @@
+<tal:block define="results options/results;
+  params python:here.getDisplayParams(nb_items=len(results));
+  columns python:1;
+  items_per_page params/items_per_page;
+  batches_all python:here.getBatchList(results, columns, items_per_page);
+  batch_list python:batches_all[0];
+  batch_info python:batches_all[1];
+  form request/form;
+  mq nocall:modules/ZTUtils/make_query;
+  portal_url here/portal_url;
+  dirname here/getId;
+  mtool here/portal_membership;
+  title_field here/title_field;
+  fields python:here.getDirectoryResultFields(dirname);
+  isAdmin python:here.portal_membership.getAuthenticatedMember().has_role(['Manager',]);
+  cpsmcat nocall:here/translation_service;
+  ">
+  <div style="padding-left: 1.5em">
+    <form action="taskdirectory_entry_delete" method="post">
+      <table tal:condition="results" summary="search result list" width="100%">
+        <tr>
+          <th tal:condition="isAdmin"> </th>
+	  <th> </th>
+	  <tal:block repeat="field fields">
+            <th>
+	      <a href=""  tal:attributes="href string:${portal_url}/taskdirectory_entry_search_form?dirname=task&taskdirectory_search_button=1">
+	        <div i18n:translate="" tal:content="field/title" align="center">
+	          id
+		</div>
+	      </a>
+	    </th>
+          </tal:block>
+        </tr>
+        <tal:block repeat="result python:batch_list[0]">
+          <tal:block define="id python:result[0]; data python:result[1]; even repeat/result/even;">
+            <tr tal:attributes="class python:test(even, 'even', 'odd')">
+	      <tal:block tal:condition="isAdmin">
+                <td align="center">
+                  <input type="checkbox" name="ids:list" tal:attributes="value id" />
+                </td>
+	      </tal:block>
+	      <td style="width: 30px;" align="center">
+		<img src="korganizer.png"/>
+	      </td>
+              <td>
+                <a href="." tal:attributes="href string:${portal_url}/taskdirectory_entry_view?dirname=${dirname}&id=${id}">
+		  <strong tal:content="structure python:data.get('titre')">mehdi</strong>
+		</a>
+              </td>
+	      <td align="center">
+		<div tal:content="structure python:data.get('date_debut').strftime('%d/%m/%Y')" />
+              </td>
+	      <td align="center">
+                <div tal:content="structure python:data.get('date_fin').strftime('%d/%m/%Y')" />
+              </td>
+	      <td align="center">
+		<div tal:content="structure python:mtool.getFullnameFromId(data.get('createur'))" />
+              </td>
+	      <td align="center">
+		<div tal:content="structure python:mtool.getFullnameFromId(data.get('responsable'))" />
+              </td>
+	      <td class="work" align="center">
+                <strong tal:content="structure python:data.get('priorite')">mehdi</strong>
+              </td>
+	      <td align="center">
+                <div tal:content="structure python:data.get('percentage')">mehdi</div>
+              </td>
+	      <td  align="center">
+	        <div tal:condition="python:data.get('etat') == 'Fait'">
+		  <strong style="color: rgb(255, 3, 26);" tal:content="structure python:data.get('etat')">mehdi</strong>
+		</div>
+		<div tal:condition="python:data.get('etat') == 'A faire'">
+		  <strong style="color: rgb(255, 188, 39);" tal:content="structure python:data.get('etat')">mehdi</strong>
+		</div>
+		<div tal:condition="python:data.get('etat') == 'En cours'">
+		  <strong style="color: rgb(0, 153, 0);" tal:content="structure python:data.get('etat')">mehdi</strong>
+		</div>
+		<div tal:condition="python:data.get('etat') == 'Differe'">
+		  <strong style="color: rgb(3, 26, 255);">Différé</strong>
+		</div>
+              </td>
+            </tr>
+          </tal:block>
+        </tal:block>
+      </table>
+      <div tal:condition="not:results">
+        <span i18n:translate="label_no_results" />
+      </div>
+      <p>
+        <input type="hidden" name="dirname" tal:attributes="value dirname" />
+        <input type="hidden" name="ids:tokens:default" value="" />
+        <tal:block condition="python:isAdmin and results">
+          <input type="button" value="button_select_all" class="context"
+            i18n:attributes="value"
+            tal:attributes="onclick python:'toggleSelect(this, \'%s\', \'%s\')'
+            % (cpsmcat('button_select_all'), cpsmcat('button_deselect_all'))" />
+          <input type="submit" class="destructive" value="button_delete"
+            i18n:attributes="value"
+            tal:attributes="onclick python:'return window.confirm(\'%s\')'
+            % cpsmcat('description_confirm_delete')" />
+        </tal:block>
+        <input type="button" class="context" value="button_back"
+          onclick="javascript:history.back()" i18n:attributes="value" />
+      </p>
+    </form>
+    <tal:block condition="python:batch_info and batch_info['nb_pages'] > 1">
+      <br />
+      <table width="100%" cellspacing="0" cellpadding="0"
+        summary="navigation layout">
+        <tr class="even">
+          <td align="center" width="100%">
+            <span i18n:translate="label_page">Pages</span>:
+            <a tal:define="previous batch_info/previous"
+               tal:condition="python:previous is not None"
+               tal:attributes="href python:'%s?%s'%(request['URL'],
+                                              mq(request.form, b_start=previous))"
+               i18n:translate="batch_previous">Previous</a>
+            <tal:block repeat="page batch_info/pages">
+              <a tal:condition="python:page != batch_info['start'] - 1"
+                tal:attributes="href python:'%s?%s'%(request['URL'],
+                mq(request.form, b_start=page))"
+                tal:content="repeat/page/number">1</a>
+              <span tal:condition="python:page == batch_info['start'] - 1"
+                tal:content="string:[${repeat/page/number}]" />
+            </tal:block>
+            <a tal:define="next batch_info/next"
+               tal:condition="python:next is not None"
+               tal:attributes="href python:'%s?%s'%(request['URL'],
+                                                  mq(request.form, b_start=next))"
+               i18n:translate="batch_next">Next</a>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+        </tr>
+      </table>
+    </tal:block>
+  </div>
+</tal:block>

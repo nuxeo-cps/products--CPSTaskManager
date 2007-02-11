@@ -1,0 +1,19 @@
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      metal:use-macro="here/main_template/macros/master">
+
+  <metal:block fill-slot="base">
+    <tal:block tal:define="dummy python:request.set('disable_border', 1)"
+               tal:replace="nothing">
+      Disable the tabs
+      <base href=""
+            tal:attributes="href python: here.absolute_url() + '/'">
+    </tal:block>
+  </metal:block>
+  
+<body>
+
+    <p tal:content="here/title_or_id">Title</p>
+
+</body>
+</html>

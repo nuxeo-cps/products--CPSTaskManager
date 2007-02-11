@@ -1,0 +1,130 @@
+<tal:block define="
+  portal here/portal_url/getPortalObject;
+  portal_title portal/title;
+  portal_url here/portal_url;
+  dummy python:request.set('breadcrumb_set',
+    [{
+      'id': 'directories',
+      'url': portal_url+'/taskdirectory_view',
+      'longtitle': here.translation_service('Directories'),
+      'title': here.translation_service('Directories'),
+    }]);
+  dirtool here/portal_directories;
+  directories dirtool/listVisibleDirectories;
+  ">
+
+ <metal:block use-macro="here/main_template/macros/master" i18n:domain="taskdirectory">
+  <metal:main fill-slot="main">
+
+   <h1 i18n:translate="_label_my_tasks">
+      My Task
+   </h1>
+
+   <br/>
+
+   <form  action="" method="post">
+    <div>
+     <input value="Cr&eacute;er une nouvelle t&acirc;che" class="standalone" type="submit" />
+     <div style="text-align: right;">
+      Filtre:
+       <select name="Filtre">
+	<option selected="selected">--------</option>
+	<option>Priorit&eacute; haute</option>
+	<option>Priorit&eacute; moyenne</option>
+	<option>Priorit&eacute; faible</option>
+	<option>Etat &agrave; faire</option>
+	<option>Etat en cours</option>
+	<option>Etat fait</option>
+       </select>
+     </div>
+    </div>
+   </form>
+
+   <form action="."  method="post" class="group">
+
+    <table summary="content layout column" cellpadding="0" cellspacing="0" width="100%">
+     <tbody>
+      <tr>
+       <td align="left" valign="top">
+        <div id="ajax_psm" style="display: none;">ajaxfeedback</div>
+        <table class="contentListing" id="folder_content" summary="content layout" class="contentListing" width="100%">
+         <thead>
+	  <tr>
+	   <th/>
+	   <th/>
+           <th align="center">
+	    <a href="." title="Trier par le nom de la t&acirc;che">T&acirc;che</a>
+	   </th>
+           <th align="center">
+	    <a href="." title="Trier par la date de d&eacute;but">Date de d&eacute;but</a>
+	   </th>
+           <th align="center">
+	    <a href="." title="Trier par la date de fin">Date de fin</a>
+	   </th>
+	   <th align="center">
+	    <a href="." title="Trier par la priorit&eacute;">Priorit&eacute;</a>
+	   </th>
+           <th align="center">
+	    <a href="." title="Trier par l'&eacute;tat">Etat</a>
+	   </th>
+          </tr>
+         </thead> 
+	 <tbody id="folder_content_tbody">
+
+          <tr class="even ajaxtd">
+           <td style="width: 5px;" align="left" valign="middle"> <input name="ids:list" value="calendar" id="cb_calendar" class="noborder" type="checkbox"> </td>
+           <td style="text-align: center;"> <img src="task_icon1.png" alt="Task icon"></td>
+	   <td> <a href="." title="Voir les d&eacute;tails de la t&acirc;che"><strong>Nom de la t&acirc;che 1</strong></a></td>
+           <td style="text-align: center;">date_debut</td>
+           <td align="center">date_fin</td>
+           <td align="center">Faible</td>
+           <td class="work" align="center">Fait</td>
+          </tr>
+
+	  <tr class="odd ajaxtd">
+           <td style="width: 5px;" align="left" valign="middle"> <input name="ids:list" value="calendar" id="cb_calendar" class="noborder" type="checkbox"> </td>
+           <td style="text-align: center;"> <img src="task_icon1.png" alt="Task icon"></td>
+	   <td> <a href="." title="Voir les d&eacute;tails de la t&acirc;che"><strong>Nom de la t&acirc;che 2</strong></a></td>
+           <td style="text-align: center;">date_debut</td>
+           <td align="center">date_fin</td>
+           <td align="center">Moyenne</td>
+           <td class="work" align="center">En cours</td>
+          </tr>
+
+	  <tr class="even ajaxtd">
+           <td style="width: 5px;" align="left" valign="middle"> <input name="ids:list" value="calendar" id="cb_calendar" class="noborder" type="checkbox"> </td>
+           <td style="text-align: center;"> <img src="task_icon1.png" alt="Task icon"></td>
+	   <td> <a href="." title="Voir les d&eacute;tails de la t&acirc;che"><strong>Nom de la t&acirc;che 3</strong></a></td>
+           <td style="text-align: center;">date_debut</td>
+           <td align="center">date_fin</td>
+           <td align="center">Haute</td>
+           <td class="work" align="center">A faire</td>
+          </tr>
+
+         </tbody>
+        </table>
+
+        <br/>
+
+       </td>
+      </tr>
+     </tbody>
+    </table>
+
+
+    <table summary="contents of the folder" class="folderButtons" cellpadding="2" cellspacing="0" width="100%">
+     <tbody>
+      <tr>
+       <td rowspan="3" align="left" valign="top"></td>
+       <td align="left" valign="top">
+        <span> <input value="Tout s&eacute;lectionner" class="context" onclick="toggleSelect(this, 'Tout s&eacute;lectionner', 'Tout d&eacute;s&eacute;lectionner')" type="button"></span> 
+        <span> <input name="folder_delete:method" value="Supprimer" class="destructive" onclick="return window.confirm('&Ecirc;tes-vous certain ?')" type="submit"></span>
+       </td>
+      </tr>
+     </tbody>
+    </table>
+   </form>
+
+  </metal:main>
+ </metal:block>
+</tal:block>

@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<object name="portal_skins">
+ <object name="task_default" meta_type="Filesystem Directory View"
+    directory="CPSTaskManager/skins/task_default"/>
+ <object name="task_directory" meta_type="Filesystem Directory View"
+    directory="CPSTaskManager/skins/task_directory"/>
+ <object name="task_document" meta_type="Filesystem Directory View"
+    directory="CPSTaskManager/skins/task_document"/>
+ <object name="task_schemas" meta_type="Filesystem Directory View"
+    directory="CPSTaskManager/skins/task_schemas"/>
+ <skin-path name="CPSSkins">
+  <layer name="task_directory" insert-after="custom"/>
+  <layer name="task_document" insert-after="custom"/>
+  <layer name="task_default" insert-after="custom"/>
+  <layer name="task_schemas" insert-after="custom"/>
+ </skin-path>
+ <skin-path name="CPSSkins-macroless">
+  <layer name="task_directory" insert-after="custom"/>
+  <layer name="task_document" insert-after="custom"/>
+  <layer name="task_default" insert-after="custom"/>
+  <layer name="task_schemas" insert-after="custom"/>
+ </skin-path>
+</object>

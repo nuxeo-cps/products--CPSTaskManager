@@ -1,0 +1,90 @@
+<tal:block define="
+  global dirname request/dirname|string:members;
+  global dir here/portal_directories/?dirname;
+  global dirtitle dir/title_or_id;
+  "/>
+<metal:block use-macro="here/main_template/macros/master">
+  <metal:block fill-slot="style_slot">
+    <tal:block define="dummy
+      python:context.setDirectoryBreadCrumbs(request, dirname, dir, dirtitle)"/>
+    <tal:block define="global actions
+      python:context.getTaskDirectoryActions(actions, dirname, dir, 'create')"/>
+
+    <link rel="Stylesheet" type="text/css" href=""
+      tal:attributes="href string:${base_url}document.css" />
+
+  <metal:block define-macro="widgets_javascript">
+    <!-- XXX this has to move to CPSSchemas -->
+    <style type="text/css"
+      tal:content="string:@import url(${base_url}calendar-win2k-1.css);"></style>
+    <script type="text/javascript" src="calendar.js"
+      tal:attributes="src string:${base_url}calendar.js"></script>
+    <script type="text/javascript" src="lang/calendar-en.js"
+      tal:define="local cpsmcat/getSelectedLanguage"
+      tal:attributes="src string:${base_url}lang/calendar-${local}.js"></script>
+    <script type="text/javascript" src="calendar-setup.js"
+      tal:attributes="src string:${base_url}calendar-setup.js"></script>
+    <script type="text/javascript" src="prototype.js"
+      tal:attributes="src string:${base_url}prototype.js"></script>
+    <script type="text/javascript" src="effects.js"
+      tal:attributes="src string:${base_url}effects.js"></script>
+    <script type="text/javascript" src="controls.js"
+      tal:attributes="src string:${base_url}controls.js"></script>
+    <script type="text/javascript" src="cpsdocument.js"
+      tal:attributes="src string:${base_url}cpsdocument.js"></script>
+    <tal:block condition="python:modules['Products.CPSUtil.integration'].isProductPresent('Products.FCKeditor')">
+      <script type="text/javascript">
+        var popup_editor_form = 'popup_fckeditor_form';
+        var width = 640;
+        var height = 520;
+      </script>
+    </tal:block>
+    <tal:block condition="python:modules['Products.CPSUtil.integration'].isProductPresent('Products.Epoz')">
+      <script type="text/javascript">
+        var popup_editor_form = 'popup_rte_form';
+        var width = 640;
+        var height = 480;
+      </script>
+    </tal:block>
+    <script type="text/javascript">
+     function popup_rte(input_id, label_edit) {
+       var args, value;
+       value = document.getElementById(input_id).value;
+       args = '?input_id='+input_id+'&amp;label_edit='+escape(label_edit);
+       str_window_features = 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=1,dependent=1,width=' + width + ',height=' + height;
+       popup = window.open(popup_editor_form + args, input_id, str_window_features);
+       if (!popup.opener) {
+         popup.opener = window;
+       }
+       return false;
+     }
+   </script>
+   </metal:block>
+
+  </metal:block>
+
+  <metal:block fill-slot="header">
+    <h1>
+      <span i18n:translate="" tal:content="dirtitle" />:
+      <span i18n:translate="cpsdir_label_create_entry">create entry</span>
+    </h1>
+    <div class="description">
+    </div>
+  </metal:block>
+
+  <metal:block fill-slot="main" tal:define="
+      dummy dir/checkCreateEntryAllowed;
+      validate python: request.has_key('taskdirectory_entry_create_form');
+      create_request python: validate and request or nothing;
+      res python: dir.renderCreateEntryDetailed(
+      validate=validate, request=create_request,
+      created_callback='taskdirectory_entry_created');
+      global rendered_main python: res[0];
+      rendered_ok python: res[1];
+      ds python: res[2];
+      global portal_status_message python: validate and (rendered_ok and 
+        'psm_content_changed' or 'psm_content_error') or '';">
+    <div tal:replace="structure rendered_main">Rendered main...</div>
+  </metal:block>
+
+</metal:block>

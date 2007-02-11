@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
+      lang="en-US"
+      metal:use-macro="here/main_template/macros/master">
+
+<metal:block metal:fill-slot="base"
+             tal:define="default_view python:test(here.getId()=='index_html',1,0);">
+  <base href="#" 
+        tal:condition="default_view"
+        tal:attributes="href python:here.portal_url()+'/'+'/'.join( here.portal_url.getRelativeContentPath(here))" />
+</metal:block>
+
+<body>
+
+<div metal:fill-slot="main"
+     tal:define="Iterator python:modules['Products.CMFPlone'].IndexIterator;
+                 tabindex python:Iterator();
+                 errors request/errors | nothing;">
+
+<tal:block define="global openflow python: container.portal_openflow" />
+<tal:block define="global UserName python:user.getUserName()" />
+
+<br />
+<p>Click here to add a task:</p>
+<form action="#" method="post"
+           tal:attributes="action string: ${here/absolute_url}/task_add">
+  <input type="submit" class="context" value=" Add task">
+</form>
+
+
+<div class="group">
+<span class="legend" i18n:translate="">
+             Tasks on <i tal:content="here/title">object title</i>
+             assigned to user <b tal:content="UserName">User Name</b>
+</span>
+
+<table class="listing"
+               id="sortable"
+               tal:define="workitems python:openflow.Catalog.searchResults(meta_type='Workitem',sort_on='priority', actor=UserName)"
+               tal:condition="workitems">
+        
+            <thead>
+                <tr>
+                    <th>&nbsp;<span i18n:translate="" tal:omit-tag="">Task</span>&nbsp;</th>
+                    <th>&nbsp;<span i18n:translate="" tal:omit-tag="">Description</span>&nbsp;</th>
+                    <th>&nbsp;<span i18n:translate="" tal:omit-tag="">!</span>&nbsp;</th>
+                    <th>&nbsp;<span i18n:translate="" tal:omit-tag="">D. date</span>&nbsp;</th>
+                    <th>&nbsp;<span i18n:translate="" tal:omit-tag="">Status</span>&nbsp;</th>
+                    <th>&nbsp;<span i18n:translate="" tal:omit-tag="">(m)</span>&nbsp;</th>
+                    <th>&nbsp;<span i18n:translate="" tal:omit-tag="">Actions</span>&nbsp;</th>            
+                </tr>
+            </thead>
+
+            <tbody>
+              <metal:block tal:repeat="workitem workitems">
+                <tal:block define="wi workitem/getObject;
+                           i python:getattr(openflow, wi.instance_id);
+                           action python:openflow.getUserActionsOnWorkitem(wi.instance_id,wi.id,request)"
+                           condition="python: i.object_id==here.id">
+
+                <tr class="even" 
+                  tal:define="oddrow repeat/workitem/odd" 
+                  tal:attributes="class python:test(oddrow, 'even', 'odd')" >
+
+                 <td>
+                   <a href="#" tal:attributes="href
+                      string: ${here/id}/task_history?instance_id=${i/id}&workitem_id=${wi/id}"
+                      tal:content="i/title">task title</a>
+                 </td>
+                 <td tal:content="i/description">task description</td>
+                 <td tal:content="i/priority">1</td>
+                 <td tal:content="i/delivery_date">31/12/2004</td>
+                 <td tal:content="wi/status">Status</td>
+                 <td tal:content="python: int(wi.active_time/60)">21</td>
+                 <td>
+                   <a href="#" title="Start" tal:condition="python: wi.status=='inactive'"
+                      tal:attributes="href 
+                      string: portal_skins/custom/wf_init?instance_id=${i/id}&workitem_id=${wi/id}">
+                     <img src="start_on.png"/>
+                   </a>
+                   <img src="start_off.png" tal:condition="python: wi.status=='active'"/>
+
+                   <a href="#" title="Pause" tal:condition="python: wi.status=='active'" 
+                      tal:attributes="href 
+                      string: portal_skins/custom/task_pause?instance_id=${i/id}&workitem_id=${wi/id}">
+                      <img src="pause_on.png"/>
+                   </a>
+                   <img src="pause_off.png" tal:condition="python: wi.status=='inactive'"/>
+               
+                   <a href="#" title="Complete" tal:condition="python: wi.status=='active'"
+                      tal:attributes="href 
+                      string: portal_skins/custom/wf_complete?instance_id=${i/id}&workitem_id=${wi/id}">
+                     <img src="stop_on.png"/>
+                   </a>
+                   <img src="stop_off.png" tal:condition="python: wi.status=='inactive'"/>
+               
+                 <!--
+                   <tal:block repeat="action_name python:action.keys()">
+                      <a href="" tal:attributes="href python:action[action_name]"
+                                 tal:content="action_name">action</a>
+                   </tal:block>
+                  -->
+                 </td>
+            </tr>
+            </tal:block>
+          </metal:block>
+
+        </tbody>
+
+</table>
+</div>
+
+<div class="group">
+<span class="legend" i18n:translate="">
+             Tasks on <i tal:content="here/title">object title</i>
+             not yet assigned
+</span>
+
+<table class="listing"
+               id=""
+               tal:define="workitems python:openflow.Catalog.searchResults(meta_type='Workitem',sort_on='priority', actor='')"
+               tal:condition="workitems">
+        
+            <thead>
+                <tr>
+                    <th>&nbsp;<span i18n:translate="" tal:omit-tag="">Task</span>&nbsp;</th>
+                    <th>&nbsp;<span i18n:translate="" tal:omit-tag="">Description</span>&nbsp;</th>
+                    <th>&nbsp;<span i18n:translate="" tal:omit-tag="">!</span>&nbsp;</th>
+                    <th>&nbsp;<span i18n:translate="" tal:omit-tag="">Delivery date</span>&nbsp;</th>
+                    <th>&nbsp;<span i18n:translate="" tal:omit-tag="">Status</span>&nbsp;</th>
+                    <th>&nbsp;<span i18n:translate="" tal:omit-tag="">Actions</span>&nbsp;</th>            
+                </tr>
+            </thead>
+
+            <tbody>
+              <metal:block tal:repeat="workitem workitems">
+                <tal:block define="wi workitem/getObject;
+                           i python:getattr(openflow, wi.instance_id);
+                           action python:openflow.getUserActionsOnWorkitem(wi.instance_id,wi.id,request)"
+                           condition="python: action and i.object_id==here.id and wi.actor==''">
+
+                <tr class="even" 
+                  tal:define="oddrow repeat/workitem/odd" 
+                  tal:attributes="class python:test(oddrow, 'even', 'odd')" >
+
+                
+                 <td>
+                   <a href="#" tal:attributes="href
+                      string: ${here/id}/task_history?instance_id=${i/id}&workitem_id=${wi/id}"
+                      tal:content="i/title">task title</a>
+                 </td>
+                 
+
+
+                 <td tal:content="i/description">task description</td>
+                 <td tal:content="i/priority">1</td>
+                 <td tal:content="i/delivery_date">31/12/2004</td>
+                 <td tal:content="wi/status">Status</td>
+                 <td>  
+                   <a href="#" tal:attributes="href python:action['Self Assign']">Accept</a>&nbsp;|&nbsp;
+                   <a href="#" tal:attributes="href python:action['Assign']">Assign</a>
+
+                 <!-- 
+                   <tal:block condition="python: here.portal_membership.checkPermission('Manage OpenFlow', here)" 
+                      repeat="action_name python:action.keys()">
+                      <a href="" tal:attributes="href python:action[action_name]"
+                                 tal:content="action_name">action</a>
+                   </tal:block>
+                 -->
+                 </td>
+            </tr>
+            </tal:block>
+          </metal:block>
+
+        </tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+
+</body>
+
+</html>
+

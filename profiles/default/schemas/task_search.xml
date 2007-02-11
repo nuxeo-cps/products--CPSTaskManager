@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<object name="task_search" meta_type="CPS Schema">
+ <field name="date_debut" meta_type="CPS DateTime Field"/>
+ <field name="date_fin" meta_type="CPS DateTime Field"/>
+ <field name="etat" meta_type="CPS String Field"/>
+ <field name="id" meta_type="CPS String Field">
+  <property name="default_expr">string:*</property>
+ </field>
+ <field name="priorite" meta_type="CPS String List Field"/>
+ <field name="responsable" meta_type="CPS String List Field" remove="True"/>
+ <field name="titre" meta_type="CPS String Field"/>
+</object>

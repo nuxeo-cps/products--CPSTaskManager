@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<object name="task" meta_type="CPS SQL Directory">
+ <property name="title">_label_my_tasks</property>
+ <property name="schema">task</property>
+ <property name="schemas"/>
+ <property name="schema_search">task_search</property>
+ <property name="schemas_search"/>
+ <property name="layout">task</property>
+ <property name="layout_search">task_search</property>
+ <property name="acl_directory_view_roles">Manager; Member; GE</property>
+ <property name="acl_entry_create_roles">Manager; Member; GE</property>
+ <property name="acl_entry_delete_roles">Manager; Owner; Member</property>
+ <property name="acl_entry_view_roles">Manager; Owner; Member</property>
+ <property name="acl_entry_edit_roles">Manager; Owner; Member</property>
+ <property name="id_field">id</property>
+ <property name="title_field">titre</property>
+ <property name="search_substring_fields">
+  <element value="titre"/>
+ </property>
+ <property name="is_hierarchical">False</property>
+ <property name="password_field"></property>
+ <property
+    name="sql_connection_path">/cps/portal_directories/PostgreSQL_db_conn</property>
+ <property name="sql_table">tache</property>
+ <entry-local-role role="Owner">python:entry_id == user_id</entry-local-role>
+ <cache-manager name="None"/>
+</object>

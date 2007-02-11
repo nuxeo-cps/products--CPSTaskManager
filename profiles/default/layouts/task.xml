@@ -1,0 +1,183 @@
+<?xml version="1.0"?>
+<object name="task" meta_type="CPS Layout">
+ <property name="layout_create_method"></property>
+ <property name="layout_edit_method"></property>
+ <property name="layout_view_method"></property>
+ <property name="style_prefix">layout_task_</property>
+ <property name="flexible_widgets"/>
+ <property name="validate_values_expr"></property>
+ <widget name="createur" meta_type="String Widget">
+  <property name="fields">
+   <element value="createur"/>
+  </property>
+  <property name="label">_label_creator</property>
+  <property name="label_edit">_label_creator</property>
+  <property name="is_i18n">True</property>
+  <property name="readonly_layout_modes"/>
+  <property name="hidden_layout_modes">
+   <element value="create"/>
+   <element value="edit"/>
+  </property>
+  <property name="hidden_readonly_layout_modes"/>
+ </widget>
+ <widget name="date_debut" meta_type="DateTime Widget">
+  <property name="title">_label_start_date</property>
+  <property name="fields">
+   <element value="date_debut"/>
+  </property>
+  <property name="label">_label_start_date</property>
+  <property name="label_edit">_label_start_date</property>
+  <property name="is_i18n">True</property>
+  <property name="readonly_layout_modes"/>
+  <property name="hidden_layout_modes"/>
+  <property name="hidden_readonly_layout_modes"/>
+  <property name="time_setting">False</property>
+  <property name="view_format">short</property>
+ </widget>
+ <widget name="date_fin" meta_type="DateTime Widget">
+  <property name="title">_label_stop_date</property>
+  <property name="fields">
+   <element value="date_fin"/>
+  </property>
+  <property name="label">_label_stop_date</property>
+  <property name="label_edit">_label_stop_date</property>
+  <property name="is_i18n">True</property>
+  <property name="readonly_layout_modes"/>
+  <property name="hidden_layout_modes"/>
+  <property name="hidden_readonly_layout_modes"/>
+  <property name="time_setting">False</property>
+  <property name="view_format">short</property>
+ </widget>
+ <widget name="description" meta_type="TextArea Widget">
+  <property name="fields">
+   <element value="description"/>
+  </property>
+  <property name="is_required">True</property>
+  <property name="label">_label_description</property>
+  <property name="label_edit">_label_description</property>
+  <property name="is_i18n">True</property>
+  <property name="readonly_layout_modes"/>
+  <property name="hidden_layout_modes"/>
+  <property name="hidden_readonly_layout_modes"/>
+ </widget>
+ <widget name="etat" meta_type="Generic Select Widget">
+  <property name="title">_label_state</property>
+  <property name="fields">
+   <element value="etat"/>
+  </property>
+  <property name="is_required">True</property>
+  <property name="label">_label_state</property>
+  <property name="label_edit">_label_state</property>
+  <property name="is_i18n">True</property>
+  <property name="readonly_layout_modes"/>
+  <property name="hidden_layout_modes"/>
+  <property name="hidden_readonly_layout_modes"/>
+  <property name="vocabulary">etat_voc</property>
+  <property name="translated">False</property>
+  <property name="render_format">radio</property>
+  <property name="blank_value_ok_if_required">False</property>
+ </widget>
+ <widget name="id" meta_type="String Widget">
+  <property name="fields">
+   <element value="id"/>
+  </property>
+  <property name="label">Id</property>
+  <property name="label_edit">Id</property>
+  <property name="readonly_layout_modes">
+   <element value="edit"/>
+  </property>
+  <property name="hidden_layout_modes">
+   <element value="create"/>
+  </property>
+  <property name="hidden_readonly_layout_modes"/>
+ </widget>
+ <widget name="priorite" meta_type="Generic Select Widget">
+  <property name="title">_label_priority</property>
+  <property name="fields">
+   <element value="priorite"/>
+  </property>
+  <property name="is_required">True</property>
+  <property name="label">_label_priority</property>
+  <property name="label_edit">_label_priority</property>
+  <property name="is_i18n">True</property>
+  <property name="readonly_layout_modes"/>
+  <property name="hidden_layout_modes"/>
+  <property name="hidden_readonly_layout_modes"/>
+  <property name="vocabulary">priorite_voc</property>
+  <property name="render_format">radio</property>
+  <property name="blank_value_ok_if_required">False</property>
+ </widget>
+ <widget name="percentage" meta_type="Generic Select Widget">
+  <property name="title">label_cps_task_percentage</property>
+  <property name="fields">
+   <element value="percentage"/>
+  </property>
+  <property name="is_required">True</property>
+  <property name="label">label_cps_task_percentage</property>
+  <property name="label_edit">label_cps_task_percentage</property>
+  <property name="is_i18n">True</property>
+  <property name="readonly_layout_modes"/>
+  <property name="hidden_layout_modes"/>
+  <property name="hidden_readonly_layout_modes"/>
+  <property name="vocabulary">percentage_voc</property>
+  <property name="translated">False</property>
+  <property name="render_format">select</property>
+  <property name="blank_value_ok_if_required">False</property>
+ </widget>
+ <widget name="responsable" meta_type="Select Widget">
+  <property name="fields">
+   <element value="responsable"/>
+  </property>
+  <property name="is_required">True</property>
+  <property name="label">label_cps_task_member</property>
+  <property name="label_edit">label_cps_task_member</property>
+  <property name="is_i18n">True</property>
+  <property name="readonly_layout_modes"/>
+  <property name="hidden_layout_modes">
+  </property>
+  <property name="hidden_readonly_layout_modes"/>
+  <property name="vocabulary">members</property>
+ </widget>
+ <widget name="titre" meta_type="String Widget">
+  <property name="title">_task_name_</property>
+  <property name="fields">
+   <element value="titre"/>
+  </property>
+  <property name="is_required">True</property>
+  <property name="label">_task_name_</property>
+  <property name="label_edit">_task_name_</property>
+  <property name="is_i18n">True</property>
+  <property name="readonly_layout_modes"/>
+  <property name="hidden_layout_modes"/>
+  <property name="hidden_readonly_layout_modes"/>
+ </widget>
+ <table>
+  <row>
+   <cell name="titre" ncols="3"/>
+  </row>
+  <row>
+   <cell name="description" ncols="3"/>
+  </row>
+  <row>
+   <cell name="date_debut" ncols="3"/>
+  </row>
+  <row>
+   <cell name="date_fin" ncols="3"/>
+  </row>
+  <row>
+   <cell name="priorite" ncols="3"/>
+  </row>
+  <row>
+   <cell name="etat" ncols="3"/>
+  </row>
+  <row>
+   <cell name="percentage" ncols="3"/>
+  </row>
+  <row>
+   <cell name="createur" ncols="3"/>
+  </row>
+  <row>
+   <cell name="responsable" ncols="3"/>
+  </row>
+ </table>
+</object>

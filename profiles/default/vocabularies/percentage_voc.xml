@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<object name="percentage_voc" meta_type="CPS Vocabulary">
+ <property name="title"></property>
+ <property name="title_msgid"></property>
+ <property name="description"></property>
+ <property name="acl_write_roles">Manager</property>
+ <item key="0%" msgid="">0%</item>
+ <item key="5%" msgid="">5%</item>
+ <item key="10%" msgid="">10%</item>
+ <item key="15%" msgid="">15%</item>
+ <item key="20%" msgid="">20%</item>
+ <item key="25%" msgid="">25%</item>
+ <item key="30%" msgid="">30%</item>
+ <item key="35%" msgid="">35%</item>
+ <item key="40%" msgid="">40%</item>
+ <item key="45%" msgid="">45%</item>
+ <item key="50%" msgid="">50%</item>
+ <item key="55%" msgid="">55%</item>
+ <item key="60%" msgid="">60%</item>
+ <item key="65%" msgid="">65%</item>
+ <item key="70%" msgid="">70%</item>
+ <item key="75%" msgid="">75%</item>
+ <item key="80%" msgid="">80%</item>
+ <item key="85%" msgid="">85%</item>
+ <item key="90%" msgid="">90%</item>
+ <item key="95%" msgid="">95%</item>
+ <item key="100%" msgid="">100%</item>
+</object>

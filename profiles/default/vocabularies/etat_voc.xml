@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<object name="etat_voc" meta_type="CPS Vocabulary">
+ <property name="title"></property>
+ <property name="title_msgid"></property>
+ <property name="description"></property>
+ <property name="acl_write_roles">Manager</property>
+ <item key="A faire" msgid="label_state_afaire">A faire</item>
+ <item key="En cours" msgid="label_state_encours">En cours</item>
+ <item key="Fait" msgid="label_state_fait">Fait</item>
+ <item key="Differe" msgid="label_state_differe">Différé</item>
+</object>

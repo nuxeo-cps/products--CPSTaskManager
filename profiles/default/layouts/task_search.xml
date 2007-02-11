@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<object name="task_search" meta_type="CPS Layout">
+ <property name="layout_create_method"></property>
+ <property name="layout_edit_method"></property>
+ <property name="layout_view_method"></property>
+ <property name="style_prefix">layout_task_</property>
+ <property name="flexible_widgets"/>
+ <property name="validate_values_expr"></property>
+ <widget name="etat" meta_type="Generic Select Widget">
+  <property name="title">_label_state</property>
+  <property name="fields">
+   <element value="etat"/>
+  </property>
+  <property name="label">_label_state</property>
+  <property name="label_edit">_label_state</property>
+  <property name="is_i18n">True</property>
+  <property name="readonly_layout_modes"/>
+  <property name="hidden_layout_modes"/>
+  <property name="hidden_readonly_layout_modes"/>
+  <property name="vocabulary">etat_voc</property>
+ </widget>
+ <widget name="priorite" meta_type="Generic Select Widget">
+  <property name="title">_label_priority</property>
+  <property name="fields">
+   <element value="priorite"/>
+  </property>
+  <property name="label">_label_priority</property>
+  <property name="label_edit">_label_priority</property>
+  <property name="is_i18n">True</property>
+  <property name="readonly_layout_modes"/>
+  <property name="hidden_layout_modes"/>
+  <property name="hidden_readonly_layout_modes"/>
+  <property name="vocabulary">priorite_voc</property>
+ </widget>
+ <widget name="titre" meta_type="String Widget">
+  <property name="title">_portal_type_CPS_Task</property>
+  <property name="fields">
+   <element value="titre"/>
+  </property>
+  <property name="label">_portal_type_CPS_Task</property>
+  <property name="label_edit">_portal_type_CPS_Task</property>
+  <property
+     name="help">Laissez vide si vous voulez afficher toutes vos taches</property>
+  <property name="is_i18n">True</property>
+  <property name="readonly_layout_modes"/>
+  <property name="hidden_layout_modes"/>
+  <property name="hidden_readonly_layout_modes"/>
+ </widget>
+ <table>
+  <row>
+   <cell name="titre"/>
+   <cell name="priorite"/>
+   <cell name="etat"/>
+  </row>
+ </table>
+</object>

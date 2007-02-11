@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<object name="priorite_voc" meta_type="CPS Vocabulary">
+ <property name="title"></property>
+ <property name="title_msgid"></property>
+ <property name="description"></property>
+ <property name="acl_write_roles">Manager</property>
+ <item key="Faible" msgid="label_priorite_faible">Faible</item>
+ <item key="Moyenne" msgid="label_priorite_moyenne">Moyenne</item>
+ <item key="Forte" msgid="label_priorite_forte">Forte</item>
+</object>

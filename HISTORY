@@ -1,0 +1,56 @@
+*******************************************
+** CPSTaskManager V0.1.2 [R1 build 2006/08/10-15:39 by div]
+** SVN URL: https://svn.nuxeo.org/priv/FFB/CPSTaskManager/trunk Revision: 37877
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Removed the hour:minutes from the tasks date widgets; added "Responsable" 
+  field to the task list; show all tasks for which the "responsable" or the 
+  "createur" are the current user
+  (http://bugs.nuxeo.com/mantis/view.php?id=4554#8329)
+
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSTaskManager V0.1.1 [R1 build 2006/08/04-17:56 by avoinea]
+** SVN URL: https://svn.nuxeo.org/priv/FFB/CPSTaskManager/trunk Revision: 37671
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Translations updates; remove the creator field from the layout; allow the 
+  responsable to be viewed/edited
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSTaskManager V0.1.0 [R1 build 2006/07/21-21:46 by avoinea]
+** SVN URL: https://svn.nuxeo.org/priv/FFB/CPSTaskManager/trunk Revision: 36959
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Fixed profile by adding the localizer configuration (to be able to import the
+  translations on profile import)
+- Added new task property (percentage) and new value for the statut field
+  (part of http://bugs.nuxeo.com/mantis/view.php?id=4554)
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+

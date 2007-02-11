@@ -1,0 +1,103 @@
+<metal:block define-macro="edit">
+<tal:block define="
+  layout options/layout;
+  ds options/datastructure;
+  creation creation|nothing;
+  formaction python: test(creation, 'taskdirectory_entry_create_form',
+                                    'taskdirectory_entry_edit_form');
+  ">
+<div class="group">
+<form action="." method="post" name="form" enctype="multipart/form-data">
+<input type="hidden" name="dirname" value="."
+  tal:attributes="value request/dirname" />
+<input type="hidden" name="id" value="."
+  tal:attributes="value request/id|nothing" />
+<table cellpadding="0" cellspacing="2" summary="form layout"
+  tal:define="global has_edits nothing">
+  <tr tal:repeat="row layout/rows">
+    <tal:block repeat="cell row">
+    <tal:block define="widget cell/widget;
+                       wid widget/getWidgetId;
+                       err python: ds.getError(wid);
+                       is_edit python: cell['widget_mode'] == 'edit';
+                       is_required python: is_edit and widget.is_required;
+                       global has_edits python: has_edits or is_edit;
+                       tooltip_id python:wid + '_help';
+                       ">
+      <td align="right"  valign="top">
+        <div class="label" tal:condition="widget/label_edit"
+          tal:attributes="class python:is_required and 'label required'
+                                                    or 'label'">
+          <span i18n:translate="" tal:condition="widget/is_i18n"
+            tal:content="widget/label_edit">label</span>
+          <span tal:condition="not:widget/is_i18n"
+            tal:content="widget/label_edit">label</span>
+          <button type="button" class="tooltipControl"
+            tal:condition="widget/help"
+            tal:attributes="onclick python:'toggleElementVisibility(\'%s\')' % tooltip_id;"> ? </button>
+        </div>
+      </td>
+      <td valign="top" colspan="1"
+        tal:attributes="colspan python:cell['ncols']*2-1">
+        <div tal:attributes="class python:err and 'error' or nothing">
+          <div tal:attributes="class widget/css_class|nothing">
+            <tal:block replace="structure cell/widget_rendered" />
+          </div>
+          <div tal:condition="err">
+            <em style="color:red" tal:content="err"
+              i18n:translate="">Error</em>
+          </div>
+        </div>
+        <div class="tooltipArea" style="visibility: hidden;"
+          tal:condition="widget/help"
+          tal:attributes="id tooltip_id;
+            onclick python:'showElement(false, \'%s\')' % tooltip_id;">
+          <span i18n:translate="" tal:condition="widget/is_i18n"
+            tal:content="widget/help">i18_key-help_for_this_field</span>
+          <span tal:condition="not:widget/is_i18n"
+            tal:content="widget/help">This is the help for this field</span>
+        </div>
+      </td>
+    </tal:block>
+    </tal:block>
+  </tr>
+  <tr>
+    <td></td>
+    <td>
+    <tal:block condition="has_edits">
+    <input type="submit" class="standalone"
+      name="taskdirectory_entry_edit_form:method"
+      value="button_change" i18n:attributes="value"
+      tal:condition="not:creation" />
+
+    <tal:block define="mtool python:here.portal_membership;
+                       current_user python:mtool.getAuthenticatedMember();
+                       is_manager python:current_user.has_role(['Manager']);
+                       is_group python:request.get('dirname', None) == 'companies';
+                       is_inactive python:ds.get('company_status', True) == False;
+                       show_button python:is_manager and is_group and is_inactive;"
+               condition="not:creation">
+    <input type="submit" class="standalone"
+      id="button_accept"
+      name="cpsdirectory_company_accept:method"
+      value="button_accept" i18n:attributes="value"
+      tal:condition="show_button" />
+    <input type="submit" class="standalone"
+      id="button_reject"
+      name="cpsdirectory_company_reject:method"
+      value="button_reject" i18n:attributes="value"
+      tal:condition="show_button" />
+    </tal:block>
+
+    <input type="submit" class="standalone"
+      name="taskdirectory_entry_create_form:method"
+      value="button_create" i18n:attributes="value"
+      tal:condition="creation" />
+    </tal:block>
+    </td>
+  </tr>
+</table>
+</form>
+</div>
+</tal:block>
+</metal:block>
